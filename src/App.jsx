@@ -1,24 +1,26 @@
 const App = () => {
   const course = 'Information Technology'
-  const part1 = {
-    name: 'Industry Elective 1',
-    exercises: 3
-  }
-  const part2 = {
-    name: 'Data Analytics 1',
-    exercises: 3
-  }
-  const part3 = {
-    name: 'Information Management 2',
-    exercises: 3
-  }
+  const parts = [
+    {
+      name: 'Industry Elective 1',
+      exercises: 3
+    },
+    {
+      name: 'Data Analytics 1',
+      exercises: 3
+    },
+    {
+      name: 'Information Management 2',
+      exercises: 3
+    }
+  ]
 
 
   return (
     <div>
       <Header course={course} />
-      <Content part1={part1} part2={part2} part3={part3} />
-      <Total part1={part1} part2={part2} part3={part3} />
+      <Content parts={parts} />
+      <Total parts={parts} />
     </div>
   )
 }
@@ -30,9 +32,9 @@ const Header = (props) => {
 const Content = (props) => {
   return (
     <div>
-      <Part part={props.part1} />
-      <Part part={props.part2} />
-      <Part part={props.part3} />
+      {props.parts.map((part) => (
+        <Part key={part.name} part={part} />
+      ))}
     </div>
   )
 }
@@ -46,11 +48,8 @@ const Part = (props) => {
 }
 
 const Total = (props) => {
-  return (
-    <p>
-      Number of exercises {props.part1.exercises + props.part2.exercises + props.part3.exercises}
-    </p>
-  )
+  const total = props.parts.reduce((sum, part) => sum + part.exercises, 0)
+  return <p>Total units {total}</p>
 }
 
 
